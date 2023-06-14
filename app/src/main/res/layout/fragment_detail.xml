@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="260dp"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
 
     <ImageView
@@ -29,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <ImageView
         android:id="@+id/imageViewPoster"
@@ -60,10 +61,13 @@
         android:id="@+id/textViewDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/guideLineBackground" />
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPoster"
+        app:layout_constraintTop_toBottomOf="@+id/guideLineBackground"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

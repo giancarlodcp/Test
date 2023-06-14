@@ -5,6 +5,9 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import pe.com.test.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,13 +21,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment_content_main, FirstFragment()).commit()
+        //supportFragmentManager.beginTransaction()
+        //    .replace(R.id.nav_host_fragment_content_main, FirstFragment()).commit()
+
+        val navController = Navigation.findNavController(this,R.id.nav_host_fragment_content_main)
+        NavigationUI.setupActionBarWithNavController(this, navController)
 
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.nav_host_fragment_content_main).navigateUp()
+                || super.onSupportNavigateUp()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

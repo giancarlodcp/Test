@@ -11,6 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import java.util.concurrent.Executors
 
 class DetailFragment : Fragment() {
@@ -33,6 +36,14 @@ class DetailFragment : Fragment() {
         tvd.text = arguments?.getString("overview")
 
         val img = view.findViewById<ImageView>(R.id.imageViewPoster)
+
+        val imageViewBackground = view.findViewById<ImageView>(R.id.imageViewBackground)
+        val imageURL = "https://image.tmdb.org/t/p/w500/${arguments?.getString("backdrop_path")}"
+        Glide.with(requireContext())
+            .load(imageURL)
+            .centerCrop()
+            .into(imageViewBackground)
+
         val executor = Executors.newSingleThreadExecutor()
         val handler = Handler(Looper.getMainLooper())
         var image: Bitmap? = null
@@ -50,5 +61,4 @@ class DetailFragment : Fragment() {
             }
         }
     }
-
 }

@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class MyViewModel(application: Application) : AndroidViewModel(application) {
 
-    val data = MutableLiveData<List<MoviePopular?>>()
+    val data = MutableLiveData<List<MoviePopular>>()
     val movieUpcoming = MutableLiveData<List<MovieUpcoming?>>()
     val error = MutableLiveData<String>()
 

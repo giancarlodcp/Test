@@ -12,7 +12,8 @@ import pe.com.test.databinding.FragmentFirstBinding
 
 class FirstFragment : Fragment() {
 
-    private var binding: FragmentFirstBinding? = null
+    private var _binding: FragmentFirstBinding? = null
+    private val binding get() = _binding!!
     var view_model: MyViewModel? = null
     var adapterUpcoming = AdapterMovieUpcoming()
     lateinit var moviePopularAdapter: MoviePopularAdapter
@@ -20,37 +21,41 @@ class FirstFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        binding = FragmentFirstBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        /** INIT Views */
+        moviePopularAdapter = MoviePopularAdapter()
+        binding.moviePopularRecyclerView.adapter = moviePopularAdapter
+        binding.moviePopularRecyclerView.layoutManager =
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
         view_model = MyViewModel(requireActivity().application)
 
         view_model!!.data.observe(viewLifecycleOwner) { user ->
-            moviePopularAdapter = MoviePopularAdapter(user)
-            binding?.moviePopularRecyclerView?.layoutManager =
-                LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            binding?.moviePopularRecyclerView!!.adapter = moviePopularAdapter
+            moviePopularAdapter.addAll(user)
         }
 
         view_model!!.error.observe(viewLifecycleOwner) { error ->
-            Snackbar.make(binding!!.baseView, error, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.baseView, error, Snackbar.LENGTH_LONG).show()
         }
 
         view_model!!.movieUpcoming.observe(viewLifecycleOwner) { follow ->
             adapterUpcoming.data = follow
-            binding?.movieUpcomingRecyclerView?.layoutManager =
+            binding.movieUpcomingRecyclerView.layoutManager =
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            binding?.movieUpcomingRecyclerView!!.adapter = adapterUpcoming
+            binding.movieUpcomingRecyclerView.adapter = adapterUpcoming
         }
 
         view_model!!.data()
-
-        return binding?.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 }
