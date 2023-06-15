@@ -1,11 +1,16 @@
-package pe.com.test
+package pe.com.test.viewmodels
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import pe.com.test.R
+import pe.com.test.models.MoviePopular
+import pe.com.test.models.MovieUpcoming
+import pe.com.test.usecase.MoviesUseCases
 
 class MyViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -14,19 +19,20 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     val error = MutableLiveData<String>()
 
     @SuppressLint("StaticFieldLeak")
-    val context = getApplication<Application>().applicationContext
+    val context: Context = getApplication<Application>().applicationContext
 
     fun data() {
 
         viewModelScope.launch {
-            val response = ApiManager.get().popularMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
+
+            val response = MoviesUseCases().getPopularMovies()
             if (response.isSuccessful) {
                 data.value = response.body()!!.results
             } else {
                 error.value = context.getString(R.string.errorSearch)
             }
 
-            val movieUpcomingResponse = ApiManager.get().upcomingMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
+            val movieUpcomingResponse = MoviesUseCases().getUpcomingMovies()
             if (response.isSuccessful) {
                 movieUpcoming.value = movieUpcomingResponse.body()!!.results
             } else {

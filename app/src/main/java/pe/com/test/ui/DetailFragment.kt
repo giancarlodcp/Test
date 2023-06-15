@@ -1,4 +1,4 @@
-package pe.com.test
+package pe.com.test.ui
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -11,9 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
-import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
+import pe.com.test.R
 import java.util.concurrent.Executors
 
 class DetailFragment : Fragment() {
@@ -38,9 +37,9 @@ class DetailFragment : Fragment() {
         val img = view.findViewById<ImageView>(R.id.imageViewPoster)
 
         val imageViewBackground = view.findViewById<ImageView>(R.id.imageViewBackground)
-        val imageURL = "https://image.tmdb.org/t/p/w500/${arguments?.getString("backdrop_path")}"
+        val imageBackgroundURL = "https://image.tmdb.org/t/p/w500/${arguments?.getString("backdrop_path")}"
         Glide.with(requireContext())
-            .load(imageURL)
+            .load(imageBackgroundURL)
             .centerCrop()
             .into(imageViewBackground)
 

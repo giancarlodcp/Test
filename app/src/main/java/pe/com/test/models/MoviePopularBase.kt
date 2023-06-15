@@ -1,6 +1,7 @@
-package pe.com.test
+package pe.com.test.models
 
 import com.google.gson.annotations.SerializedName
+import pe.com.test.models.MoviePopular
 
 class MoviePopularBase(
     val page: Int,

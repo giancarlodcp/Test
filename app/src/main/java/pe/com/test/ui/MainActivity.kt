@@ -1,4 +1,4 @@
-package pe.com.test
+package pe.com.test.ui
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import pe.com.test.R
 import pe.com.test.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         //supportFragmentManager.beginTransaction()
         //    .replace(R.id.nav_host_fragment_content_main, FirstFragment()).commit()
 
-        val navController = Navigation.findNavController(this,R.id.nav_host_fragment_content_main)
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
         NavigationUI.setupActionBarWithNavController(this, navController)
 
         binding.fab.setOnClickListener { view ->

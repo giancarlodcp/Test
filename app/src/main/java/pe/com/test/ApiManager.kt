@@ -2,6 +2,8 @@ package pe.com.test
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import pe.com.test.models.MoviePopularBase
+import pe.com.test.models.MovieUpcomingBase
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,7 +17,7 @@ object ApiManager {
 
     private var apiInterface: ApiInterface? = null
 
-    val retrofit: Retrofit
+    private val retrofit: Retrofit
         get() {
 
             val logging = HttpLoggingInterceptor()

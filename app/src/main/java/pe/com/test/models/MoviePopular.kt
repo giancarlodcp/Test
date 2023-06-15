@@ -1,4 +1,4 @@
-package pe.com.test
+package pe.com.test.models
 
 import com.google.gson.annotations.SerializedName
 

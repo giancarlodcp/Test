@@ -1,4 +1,4 @@
-package pe.com.test
+package pe.com.test.ui.adapters
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -8,10 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import pe.com.test.models.MovieUpcoming
+import pe.com.test.R
 import java.util.concurrent.Executors
 
 class AdapterMovieUpcoming() :
@@ -29,8 +30,13 @@ class AdapterMovieUpcoming() :
     override fun onBindViewHolder(holder: MovieUpcomingViewHolder, position: Int) {
         val item = data[position]
         holder.bind(item!!)
-        val bundle = bundleOf("title" to item.title, "posterPath" to item.posterPath, "overview" to item.overview)
-        holder.itemView.setOnClickListener{ view ->
+        val bundle = bundleOf(
+            "title" to item.title,
+            "backdrop_path" to item.backdropPath,
+            "posterPath" to item.posterPath,
+            "overview" to item.overview
+        )
+        holder.itemView.setOnClickListener { view ->
             view.findNavController().navigate(R.id.action_FirstFragment_to_DetailFragment, bundle)
         }
     }

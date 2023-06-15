@@ -1,4 +1,4 @@
-package pe.com.test
+package pe.com.test.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import pe.com.test.ui.adapters.AdapterMovieUpcoming
+import pe.com.test.ui.adapters.MoviePopularAdapter
 import pe.com.test.databinding.FragmentFirstBinding
+import pe.com.test.viewmodels.MyViewModel
 
 class FirstFragment : Fragment() {
 
