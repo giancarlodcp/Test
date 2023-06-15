@@ -6,6 +6,7 @@ import android.content.Context
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import pe.com.test.R
+import pe.com.test.ResponseEnum
 import pe.com.test.models.MoviePopular
 import pe.com.test.models.MovieUpcoming
 import pe.com.test.repository.MoviesRepository
@@ -25,15 +26,10 @@ class MyViewModel(application: Application, private val repository: MoviesReposi
 
         viewModelScope.launch {
 
-            /*val response = MoviesUseCases().getPopularMovies()
-            if (response.isSuccessful) {
-                data.value = response.body()!!.results
-            } else {
-                error.value = context.getString(R.string.errorSearch)
-            }*/
-
-            if(allPopularMovies.value?.isEmpty() == true){
-                repository.insert()
+            when(repository.insert()){
+                ResponseEnum.NETWORK_ERROR -> error.value = context.getString(R.string.errorNetwork)
+                ResponseEnum.ERROR -> error.value = context.getString(R.string.errorSearch)
+                else -> {}
             }
 
             try {
@@ -41,10 +37,10 @@ class MyViewModel(application: Application, private val repository: MoviesReposi
                 if (movieUpcomingResponse.isSuccessful) {
                     movieUpcoming.value = movieUpcomingResponse.body()!!.results
                 } else {
-                    error.value = context.getString(R.string.errorSearch)
+                    //error.value = context.getString(R.string.errorSearch)
                 }
             }catch (exception: Exception){
-                error.value = context.getString(R.string.errorSearch)
+                //error.value = context.getString(R.string.errorNetwork)
             }
 
         }
