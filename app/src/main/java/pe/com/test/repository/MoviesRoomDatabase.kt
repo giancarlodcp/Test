@@ -9,15 +9,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pe.com.test.models.MoviePopular
+import pe.com.test.models.MovieUpcoming
 
-@Database(entities = [MoviePopular::class], version = 1, exportSchema = false)
+@Database(entities = [MoviePopular::class, MovieUpcoming::class], version = 1, exportSchema = false)
 abstract class MoviesRoomDatabase : RoomDatabase() {
 
     abstract fun moviesDAO(): MoviesDAO
 
     companion object {
-        // Singleton prevents multiple instances of database opening at the
-        // same time.
         @Volatile
         private var INSTANCE: MoviesRoomDatabase? = null
 

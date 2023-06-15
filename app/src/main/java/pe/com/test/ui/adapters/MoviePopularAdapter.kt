@@ -8,8 +8,8 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import pe.com.test.models.MoviePopular
 import pe.com.test.R
+import pe.com.test.models.MoviePopular
 
 class MoviePopularAdapter : RecyclerView.Adapter<MoviePopularAdapter.MoviePopularViewHolder>() {
 

@@ -10,13 +10,12 @@ import pe.com.test.ResponseEnum
 import pe.com.test.models.MoviePopular
 import pe.com.test.models.MovieUpcoming
 import pe.com.test.repository.MoviesRepository
-import pe.com.test.usecase.MoviesUseCases
 
 class MyViewModel(application: Application, private val repository: MoviesRepository) :
     AndroidViewModel(application) {
 
     val allPopularMovies: LiveData<List<MoviePopular>> = repository.allPopularMovies.asLiveData()
-    val movieUpcoming = MutableLiveData<List<MovieUpcoming?>>()
+    val allUpcomingMovies: LiveData<List<MovieUpcoming>> = repository.allUpcomingMovies.asLiveData()
     val error = MutableLiveData<String>()
 
     @SuppressLint("StaticFieldLeak")
@@ -26,21 +25,16 @@ class MyViewModel(application: Application, private val repository: MoviesReposi
 
         viewModelScope.launch {
 
-            when(repository.insert()){
+            when(repository.getPopularMovies()){
                 ResponseEnum.NETWORK_ERROR -> error.value = context.getString(R.string.errorNetwork)
                 ResponseEnum.ERROR -> error.value = context.getString(R.string.errorSearch)
                 else -> {}
             }
 
-            try {
-                val movieUpcomingResponse = MoviesUseCases().getUpcomingMovies()
-                if (movieUpcomingResponse.isSuccessful) {
-                    movieUpcoming.value = movieUpcomingResponse.body()!!.results
-                } else {
-                    //error.value = context.getString(R.string.errorSearch)
-                }
-            }catch (exception: Exception){
-                //error.value = context.getString(R.string.errorNetwork)
+            when(repository.getUpcomingMovies()){
+                ResponseEnum.NETWORK_ERROR -> error.value = context.getString(R.string.errorNetwork)
+                ResponseEnum.ERROR -> error.value = context.getString(R.string.errorSearch)
+                else -> {}
             }
 
         }

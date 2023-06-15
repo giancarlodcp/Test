@@ -11,11 +11,12 @@ import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import pe.com.test.models.MovieUpcoming
 import pe.com.test.R
 import java.util.concurrent.Executors
 
-class AdapterMovieUpcoming() :
+class AdapterMovieUpcoming :
     RecyclerView.Adapter<AdapterMovieUpcoming.MovieUpcomingViewHolder>() {
 
     var data: List<MovieUpcoming?> = emptyList()
@@ -43,24 +44,12 @@ class AdapterMovieUpcoming() :
 
     class MovieUpcomingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movieUpcoming: MovieUpcoming) {
-            val image_view = itemView.findViewById<ImageView>(R.id.posterImageView)
-            val executor = Executors.newSingleThreadExecutor()
-            val handler = Handler(Looper.getMainLooper())
-            var image: Bitmap? = null
-            executor.execute {
-                val imageURL = "https://image.tmdb.org/t/p/w185/${movieUpcoming.posterPath}"
-                try {
-                    val `in` = java.net.URL(imageURL).openStream()
-                    image = BitmapFactory.decodeStream(`in`)
-                    handler.post {
-                        image_view.setImageBitmap(image)
-                    }
-                }
-                catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-
+            val imageView = itemView.findViewById<ImageView>(R.id.posterImageView)
+            val imageURL = "https://image.tmdb.org/t/p/w185/${movieUpcoming.posterPath}"
+            Glide.with(itemView.context)
+                .load(imageURL)
+                .centerCrop()
+                .into(imageView)
         }
     }
 
