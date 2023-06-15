@@ -1,13 +1,16 @@
 package pe.com.test.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import pe.com.test.MoviesApplication
 import pe.com.test.ui.adapters.AdapterMovieUpcoming
 import pe.com.test.ui.adapters.MoviePopularAdapter
 import pe.com.test.databinding.FragmentFirstBinding
@@ -29,6 +32,7 @@ class FirstFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         /** INIT Views */
@@ -37,10 +41,14 @@ class FirstFragment : Fragment() {
         binding.moviePopularRecyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
-        view_model = MyViewModel(requireActivity().application)
+        val repository = (requireActivity().application as MoviesApplication).repository
+        view_model = MyViewModel(requireActivity().application, repository)
 
-        view_model!!.data.observe(viewLifecycleOwner) { user ->
-            moviePopularAdapter.addAll(user)
+        view_model!!.allPopularMovies.observe(viewLifecycleOwner){
+            it.let {
+                moviePopularAdapter.addAll(it)
+                moviePopularAdapter.notifyDataSetChanged()
+            }
         }
 
         view_model!!.error.observe(viewLifecycleOwner) { error ->
@@ -54,7 +62,7 @@ class FirstFragment : Fragment() {
             binding.movieUpcomingRecyclerView.adapter = adapterUpcoming
         }
 
-        view_model!!.data()
+        view_model!!.init()
     }
 
     override fun onDestroyView() {
